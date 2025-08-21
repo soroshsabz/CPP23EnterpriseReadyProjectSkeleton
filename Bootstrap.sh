@@ -28,7 +28,7 @@ readonly script_name script_dir
 
 function main() {
     # check_args "${@}"
-    apt install gcc ninja-build
+    apt install --assume-yes gcc ninja-build
     prepare_cmake
     prepare_gcc
     :
