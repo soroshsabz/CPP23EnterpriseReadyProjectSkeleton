@@ -33,7 +33,7 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --preset linux-${{env.BUILD_TYPE}} --build ${{github.workspace}}/out
+      run: cmake --build ${{github.workspace}}/out --config ${{env.BUILD_TYPE}}
 
     - name: Test
       working-directory: ${{github.workspace}}/out
