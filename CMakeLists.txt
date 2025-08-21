@@ -26,11 +26,14 @@ project (CPP23EnterpriseReadyProjectSkeleton LANGUAGES CXX)
 
 # Tell CMake that we explicitly want `import std`. This will initialize the
 # property on all targets declared after this to 1
-set (CMAKE_CXX_MODULE_STD 1)
+# Both gcc and msvc version must be greater than 15 to support `import std`
+if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 15)
+	set (CMAKE_CXX_MODULE_STD 1)
+endif ()
 
 # set	(CMAKE_CXX_EXTENSIONS OFF)
 set	(CMAKE_CXX_STANDARD 23)
-set	(CMAKE_CXX_STANDARD_REQUIRED ON)
+set	(CMAKE_CXX_STANDARD_REQUIRED YES)
 
 # Add source to this project's executable.
 add_executable (CPP23EnterpriseReadyProjectSkeleton)
