@@ -1,3 +1,9 @@
+# ITNOA
+
+# Temproray directories
+/out
+/.vs
+
 # Prerequisites
 *.d
 
