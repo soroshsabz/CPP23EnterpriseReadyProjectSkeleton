@@ -1,0 +1,2 @@
+# C-23EnterpriseReadyProjectSkeleton
+Modern C++23 Enterprise Ready Project Skeleton
