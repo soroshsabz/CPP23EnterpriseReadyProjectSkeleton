@@ -15,11 +15,10 @@ env:
 jobs:
   build_on_windows:
     runs-on: windows-latest
+    env:
+      VCPKG_ROOT: C:\vcpkg
 
     steps:
-    - env:
-        VCPKG_ROOT: C:\vcpkg
-
     - uses: actions/checkout@v4
 
     - name: Configure CMake
@@ -43,10 +42,10 @@ jobs:
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
 
-    steps:
-    - env:
-        VCPKG_ROOT: /usr/local/share/vcpkg
+    env:
+      VCPKG_ROOT: /usr/local/share/vcpkg
 
+    steps:
     - uses: actions/checkout@v4
 
     - name: Prepare precondition
