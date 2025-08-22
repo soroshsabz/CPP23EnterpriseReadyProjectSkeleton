@@ -28,6 +28,7 @@ readonly script_name script_dir
 
 function main() {
     # check_args "${@}"
+    apt install --assume-yes gcc ninja-build
     prepare_cmake
     prepare_gcc
     :
@@ -70,8 +71,8 @@ function install_cmake() {
 function install_gcc() {
     # TODO: Check distro and version
     apt install --assume-yes g++-14
-    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
 }
 
 function finish() {
