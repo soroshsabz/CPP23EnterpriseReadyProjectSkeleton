@@ -1,0 +1,18 @@
+# ITNOA
+documentation:
+- changed-files:
+  - any-glob-to-any-file: 'docs/**'
+
+modules:
+- changed-files:
+  - any-glob-to-any-file: 'src/**.ixx'
+
+build-system:
+- changed-files:
+  - any-glob-to-any-file: 'CM*'
+
+feature:
+- head-branch: ['^feature', 'feature']
+
+bugfix:
+- head-branch: ['^fix', 'bug']
