@@ -5,7 +5,7 @@ documentation:
 
 modules:
 - changed-files:
-  - any-glob-to-any-file: 'src/**.ixx'
+  - any-glob-to-any-file: '**/*.ixx'
 
 build-system:
 - changed-files:
