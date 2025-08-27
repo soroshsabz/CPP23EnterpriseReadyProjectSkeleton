@@ -28,7 +28,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Release]
-        preset: [x64-debug, linux-debug]
         cpp_compiler: [g++, cl]
         include:
           - os: windows-latest
@@ -42,10 +41,8 @@ jobs:
         exclude:
           - os: windows-latest
             cpp_compiler: g++
-            preset: linux-debug
           - os: ubuntu-latest
             cpp_compiler: cl
-            preset: x64-debug
     env:
       VCPKG_ROOT: ${{ matrix.vcpkg_path }}
 
