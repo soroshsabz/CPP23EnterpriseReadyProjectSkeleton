@@ -1,6 +1,8 @@
 # ITNOA
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
 name: Continues Integration
+permissions:
+  contents: read
 
 on:
   push:
