@@ -1,7 +1,9 @@
 ITNOA
 
-# CPP23EnterpriseReadyProjectSkeleton
+# CPP23 Enterprise Ready Project Skeleton (Template)
 Modern C++23 Enterprise Ready Project Skeleton
+
+**You can use this project as a template for creating new repository**
 
 # Getting Strated
 
