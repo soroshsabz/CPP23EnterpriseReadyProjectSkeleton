@@ -47,7 +47,7 @@ jobs:
       VCPKG_ROOT: ${{ matrix.vcpkg_path }}
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
       # Prepration begin
     - name: Add msbuild to PATH
