@@ -22,7 +22,7 @@ endif()
 if (CMAKE_VERSION VERSION_GREATER 4.0)
 	set (CMAKE_EXPERIMENTAL_CXX_IMPORT_STD d0edc3af-4c50-42ea-a356-e2862fe7a444)
 elseif (CMAKE_VERSION VERSION_GREATER 3.31)
-	# see https://github.com/Kitware/CMake/blob/v3.31.6/Help/dev/experimental.rst to retrive UUID value
+	# see https://github.com/Kitware/CMake/blob/v3.31.6/Help/dev/experimental.rst to retrieve UUID value
 	set (CMAKE_EXPERIMENTAL_CXX_IMPORT_STD 0e5b6991-d74f-4b3d-a41c-cf096e0b2508)
 endif ()
 
