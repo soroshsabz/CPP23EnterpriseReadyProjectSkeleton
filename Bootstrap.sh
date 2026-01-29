@@ -6,13 +6,13 @@
 #
 #/ Usage: Bootstrap.sh [OPTIONS]... [ARGUMENTS]...
 #/
-#/ 
+#/
 #/ OPTIONS
 #/   -h, --help
 #/                Print this help message
 #/
 #/ EXAMPLES
-#/  
+#/
 
 # abort on nonzero exitstatus
 set -o errexit
