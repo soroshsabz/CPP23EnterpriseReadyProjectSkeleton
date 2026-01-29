@@ -1,7 +1,7 @@
 # ITNOA
 
 $vcpkgFolder = "D:\vcpkg"
-if (Test-Patch -Path $vcpkgFolder) {
+if (Test-Path -Path $vcpkgFolder) {
     $env:VCPKG_ROOT = $vcpkgFolder
 } else {
     $vcpkgFolder = "D:\Source\Repos\vcpkg"
