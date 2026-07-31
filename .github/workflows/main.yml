@@ -68,6 +68,12 @@ jobs:
        chmod +x Bootstrap.sh
        sudo ./Bootstrap.sh
 
+    - name: Set up vcpkg for linux
+      if: startsWith(matrix.os, 'ubuntu')
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 25b93347d8b1cb83bba83899c85455de050b8d02
+
     - name: Configure CMake
       # Configure CMake in a 'out' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
