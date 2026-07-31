@@ -1,13 +1,21 @@
 {
     "cSpell.words": [
         "astextplain",
+        "ctest",
+        "DBUILD",
+        "DCMAKE",
+        "egor",
+        "gcovr",
         "lsproj",
         "modelproj",
+        "msbuild",
         "MSVC",
         "msysgit",
         "smod",
         "sqlproj",
         "STREQUAL",
+        "tensin",
+        "unittests",
         "wixproj",
         "wwaproj"
     ],
