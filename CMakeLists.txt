@@ -19,7 +19,7 @@ endif()
 # This specific value changes as experimental support evolves. See
 # `Help/dev/experimental.rst` in the CMake source corresponding to
 # your CMake build for the exact value to use.
-if (CMAKE_VERSION VERSION_GREATER 4.4)
+if (CMAKE_VERSION VERSION_GREATER_EQUAL 4.4)
 	# see https://github.com/Kitware/CMake/blob/v4.4.2/Help/dev/experimental.rst to retrieve UUID value
 	set (CMAKE_EXPERIMENTAL_CXX_IMPORT_STD f35a9ac6-8463-4d38-8eec-5d6008153e7d)
 elseif (CMAKE_VERSION VERSION_GREATER 4.3)
