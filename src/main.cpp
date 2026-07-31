@@ -1,8 +1,8 @@
 // ITNOA
 
-//import std;
+import std;
 
-#include <iostream>
+//#include <iostream>
 
 import ModuleA;
 

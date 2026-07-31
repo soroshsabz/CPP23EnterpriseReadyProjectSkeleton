@@ -19,7 +19,10 @@ endif()
 # This specific value changes as experimental support evolves. See
 # `Help/dev/experimental.rst` in the CMake source corresponding to
 # your CMake build for the exact value to use.
-if (CMAKE_VERSION VERSION_GREATER 4.0)
+if (CMAKE_VERSION VERSION_GREATER 4.3)
+	# see https://github.com/Kitware/CMake/blob/v4.3.1/Help/dev/experimental.rst to retrieve UUID value
+	set (CMAKE_EXPERIMENTAL_CXX_IMPORT_STD 451f2fe2-a8a2-47c3-bc32-94786d8fc91b)
+elseif (CMAKE_VERSION VERSION_GREATER 4.0)
 	set (CMAKE_EXPERIMENTAL_CXX_IMPORT_STD d0edc3af-4c50-42ea-a356-e2862fe7a444)
 elseif (CMAKE_VERSION VERSION_GREATER 3.31)
 	# see https://github.com/Kitware/CMake/blob/v3.31.6/Help/dev/experimental.rst to retrieve UUID value
@@ -34,12 +37,12 @@ project (CPP23EnterpriseReadyProjectSkeleton
 # property on all targets declared after this to 1
 # Both gcc and msvc version must be greater than 15 to support `import std`
 if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 15)
-	set (CMAKE_CXX_MODULE_STD 1)
+	set (CMAKE_CXX_MODULE_STD ON)
 endif ()
 
-# set	(CMAKE_CXX_EXTENSIONS OFF)
 set	(CMAKE_CXX_STANDARD 23)
 set	(CMAKE_CXX_STANDARD_REQUIRED YES)
+set	(CMAKE_CXX_EXTENSIONS OFF)
 
 message ("CMAKE_CXX_SOURCE_FILE_EXTENSIONS ${CMAKE_CXX_SOURCE_FILE_EXTENSIONS}")
 
@@ -61,7 +64,7 @@ target_sources (CPP23EnterpriseReadyProjectSkeleton
 		"src/main.cpp")
 target_link_libraries (CPP23EnterpriseReadyProjectSkeleton CPP23EnterpriseReadyProjectSkeletonLib)
 
-#target_compile_features (CPP23EnterpriseReadyProjectSkeleton PRIVATE cxx_std_23 INTERFACE cxx_std_23)
+target_compile_features (CPP23EnterpriseReadyProjectSkeleton PRIVATE cxx_std_23 INTERFACE cxx_std_23)
 
 include(CTest)
 
