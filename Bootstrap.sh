@@ -31,6 +31,7 @@ function main() {
     apt install --assume-yes gcc ninja-build
     prepare_cmake
     prepare_gcc
+    prepare_coverage_tool
     :
 }
 
@@ -57,6 +58,17 @@ function prepare_gcc() {
 
 }
 
+function prepare_coverage_tool() {
+    local gcovr_version=$(gcovr --version | head -n 1 | cut -d ' ' -f 2)
+    readonly gcovr_version
+    echo "GCovr version is: ${gcovr_version}"
+
+    if [[ ${gcovr_version} < 7.0 ]] ; then
+        echo "gcovr version is lower than required"
+        install_coverage_tool
+    fi
+}
+
 function install_cmake() {
     # TODO: Check distro and version
     apt install --assume-yes ca-certificates gpg wget
@@ -73,6 +85,11 @@ function install_gcc() {
     apt install --assume-yes g++-14
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
+}
+
+function install_coverage_tool() {
+    # TODO: Check distro and version
+    apt install --assume-yes gcovr
 }
 
 function finish() {

@@ -10,5 +10,8 @@
         "STREQUAL",
         "wixproj",
         "wwaproj"
-    ]
+    ],
+    "json.schemaDownload.trustedDomains": {
+        "https://raw.githubusercontent.com/microsoft/": true
+    }
 }

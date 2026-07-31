@@ -63,5 +63,22 @@ target_link_libraries (CPP23EnterpriseReadyProjectSkeleton CPP23EnterpriseReadyP
 
 #target_compile_features (CPP23EnterpriseReadyProjectSkeleton PRIVATE cxx_std_23 INTERFACE cxx_std_23)
 
+include(CTest)
 
-# TODO: Add tests and install targets if needed.
+if(BUILD_TESTING)
+    find_package(GTest CONFIG REQUIRED)
+
+    add_executable(CPP23EnterpriseReadyProjectSkeletonTests
+        tests/Component1Tests.cpp
+    )
+
+    target_link_libraries(CPP23EnterpriseReadyProjectSkeletonTests
+        PRIVATE
+            CPP23EnterpriseReadyProjectSkeletonLib
+            GTest::gtest_main
+    )
+
+    include(GoogleTest)
+
+    gtest_discover_tests(CPP23EnterpriseReadyProjectSkeletonTests)
+endif()
