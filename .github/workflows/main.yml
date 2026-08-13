@@ -26,7 +26,8 @@ jobs:
       #
       # To add more build types (Release, Debug, RelWithDebInfo, etc.) customize the build_type list.
       matrix:
-        os: [ubuntu-latest, windows-latest]
+      # TODO: ubuntu-26.04 replace with ubuntu-latest after August 2026
+        os: [ubuntu-26.04, windows-latest]
         build_type: [Release]
         cpp_compiler: [g++, cl]
         include:
@@ -35,7 +36,7 @@ jobs:
             preset: x64-debug
             vcpkg_path: C:\vcpkg
             coverage: false
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             cpp_compiler: g++
             preset: linux-debug
             vcpkg_path: /usr/local/share/vcpkg
@@ -43,7 +44,7 @@ jobs:
         exclude:
           - os: windows-latest
             cpp_compiler: g++
-          - os: ubuntu-latest
+          - os: ubuntu-26.04
             cpp_compiler: cl
     env:
       VCPKG_ROOT: ${{ matrix.vcpkg_path }}
