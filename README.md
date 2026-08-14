@@ -61,8 +61,13 @@ Bootstrap.sh    # Linux/macOS
 ### 4. Build the project
 
 ```bash
-cmake -S . -B build
-cmake --build build
+cmake -S . --preset=x64-debug       # Windows
+# or
+cmake -S . --preset=linux-debug     # Linux
+
+cmake --build out/build/x64-debug   # Windows
+# or
+cmake --build out/build/linux-debug # Linux
 ```
 
 ## Project Structure
