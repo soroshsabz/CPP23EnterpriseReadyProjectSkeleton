@@ -181,6 +181,8 @@ else ()
 	target_compile_features (${PROJECT_NAME} PRIVATE cxx_std_23 PUBLIC cxx_std_23)
 endif ()
 
+include(cmake/CompilerWarnings.cmake)
+
 include(CTest)
 
 if(BUILD_TESTING)

@@ -28,10 +28,11 @@ readonly script_name script_dir
 
 function main() {
     # check_args "${@}"
-    apt install --assume-yes gcc ninja-build
+    apt install --assume-yes gcc ninja-build zip unzip build-essential pkg-config
     prepare_cmake
     prepare_gcc
     prepare_coverage_tool
+    prepare_vcpkg
     :
 }
 
@@ -51,7 +52,7 @@ function prepare_gcc() {
     readonly gcc_version
     echo "GCC version is: ${gcc_version}"
 
-    if [[ ${gcc_version} < 14.2 ]] ; then
+    if [[ ${gcc_version} < 16.0 ]] ; then
         echo "gcc version is lower than required"
         install_gcc
     fi
@@ -69,12 +70,23 @@ function prepare_coverage_tool() {
     fi
 }
 
+function prepare_vcpkg() {
+    local vcpkg_version=$(vcpkg --version | head -n 1 | cut -d ' ' -f 6)
+    readonly vcpkg_version
+    echo "VCPKG version is: ${vcpkg_version}"
+
+    if [[ ${vcpkg_version} < 2026 ]] ; then
+        echo "vcpkg version is lower than required"
+        install_vcpkg
+    fi
+}
+
 function install_cmake() {
     # TODO: Check distro and version
     apt install --assume-yes ca-certificates gpg wget
     test -f /usr/share/doc/kitware-archive-keyring/copyright ||
     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
-    echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ noble main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
+    echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ resolute main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
     apt update
     apt install --assume-yes kitware-archive-keyring
     apt install --assume-yes cmake
@@ -82,14 +94,22 @@ function install_cmake() {
 
 function install_gcc() {
     # TODO: Check distro and version
-    apt install --assume-yes g++-14
-    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
-    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
+    apt install --assume-yes g++-16
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-16 100
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-16 100
 }
 
 function install_coverage_tool() {
     # TODO: Check distro and version
     apt install --assume-yes gcovr
+}
+
+function install_vcpkg() {
+    cd /tmp && wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz
+    mkdir /opt/vcpkg
+    tar xf vcpkg.tar.gz --strip-components=1 -C /opt/vcpkg
+    /opt/vcpkg/bootstrap-vcpkg.sh
+    ln -s /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
 }
 
 function finish() {
