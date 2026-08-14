@@ -2,7 +2,7 @@
 #
 # ITNOA
 #
-# Author: Bert Van Vreckem <bert.vanvreckem@gmail.com>
+# Authors: Bert Van Vreckem <bert.vanvreckem@gmail.com>; Seyyed Soroosh Hosseinalipour <soorosh_abi@hotmail.com>
 #
 #/ Usage: Bootstrap.sh [OPTIONS]... [ARGUMENTS]...
 #/
@@ -105,11 +105,14 @@ function install_coverage_tool() {
 }
 
 function install_vcpkg() {
-    cd /tmp && wget -qO vcpkg.tar.gz https://github.com/microsoft/vcpkg/archive/master.tar.gz
-    mkdir /opt/vcpkg
-    tar xf vcpkg.tar.gz --strip-components=1 -C /opt/vcpkg
-    /opt/vcpkg/bootstrap-vcpkg.sh
-    ln -s /opt/vcpkg/vcpkg /usr/local/bin/vcpkg
+    # FIXME: this method does not work for normal users
+    apt install --assume-yes git
+    cd ~ && git clone https://github.com/microsoft/vcpkg.git
+    ~/vcpkg/bootstrap-vcpkg.sh
+    ln -s ~/vcpkg/vcpkg /usr/local/bin/vcpkg
+
+    cd ~ && export VCPKG_ROOT=`pwd`/vcpkg
+    export PATH=$VCPKG_ROOT:$PATH
 }
 
 function finish() {
