@@ -107,12 +107,35 @@ function install_coverage_tool() {
 function install_vcpkg() {
     # FIXME: this method does not work for normal users
     apt install --assume-yes git
-    cd ~ && git clone https://github.com/microsoft/vcpkg.git
-    ~/vcpkg/bootstrap-vcpkg.sh
-    ln -s ~/vcpkg/vcpkg /usr/local/bin/vcpkg
+    local original_user=$(journalctl _COMM=sudo | grep -i 'Bootstrap.sh' | head -n 1 | cut -d ' ' -f 6)
+    readonly originial_user
+    if [[ ${USER} == "root" ]] ; then
+        echo "Original User: ${original_user}"
+        sudo -u ${original_user} bash <<'EOF'
+            cd ~ && git clone https://github.com/microsoft/vcpkg.git
+            ~/vcpkg/bootstrap-vcpkg.sh
 
-    cd ~ && export VCPKG_ROOT=`pwd`/vcpkg
-    export PATH=$VCPKG_ROOT:$PATH
+            cd ~
+            if ! grep -q -- "VCPKG_ROOT" ~/.bashrc; then
+                echo 'export VCPKG_ROOT=`pwd`/vcpkg' >> ~/.bashrc
+                echo 'export PATH=$VCPKG_ROOT:$PATH' >> ~/.bashrc
+            fi
+EOF
+        export VCPKG_ROOT=$(getent passwd ${original_user} | cut -d: -f6)/vcpkg
+        export PATH=$VCPKG_ROOT:$PATH
+    else
+        cd ~ && git clone https://github.com/microsoft/vcpkg.git
+        ~/vcpkg/bootstrap-vcpkg.sh
+
+        cd ~
+        if ! grep -q -- "VCPKG_ROOT" ~/.bashrc; then
+            echo 'export VCPKG_ROOT=~/vcpkg' >> ~/.bashrc
+            echo 'export PATH=$VCPKG_ROOT:$PATH' >> ~/.bashrc
+        fi
+
+        source ~/.bashrc
+    fi
+    ln -s ${VCPKG_ROOT}/vcpkg /usr/local/bin/vcpkg
 }
 
 function finish() {
