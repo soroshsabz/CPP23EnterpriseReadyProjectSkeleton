@@ -12,7 +12,6 @@ set(LIBRARY_MODULES
 
 set(APPLICATION_SOURCES
 		src/main.cpp
-		${sources}
 )
 
 set(LIBRARY_HEADERS

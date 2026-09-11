@@ -62,7 +62,7 @@ if (UNIX)
 # TODO: For per-target control
 #target_compile_definitions(exe
 #    PRIVATE
-#        # If the debug configuration pass the DEBUG define to the compiler 
+#        # If the debug configuration pass the DEBUG define to the compiler
 #        $<$<CONFIG:Debug>:DEBUG>
 #)
 # FIXME: Check not work in release mode
@@ -89,43 +89,6 @@ include(cmake/SourcesAndHeaders.cmake)
 
 message ("CMAKE_CXX_SOURCE_FILE_EXTENSIONS ${CMAKE_CXX_SOURCE_FILE_EXTENSIONS}")
 
-# All sources in src except main.cpp as a one library
-add_library (${PROJECT_NAME}_INTERNAL_LIB)
-target_sources (${PROJECT_NAME}_INTERNAL_LIB
-	PRIVATE
-		${LIBRARY_SOURCES}
-
-		FILE_SET private_headers
-		TYPE HEADERS
-		BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
-		FILES
-			${LIBRARY_HEADERS}
-
-		FILE_SET private_cxx_modules
-		TYPE CXX_MODULES
-		BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
-		FILES
-			${LIBRARY_MODULES}
-	PUBLIC
-		FILE_SET public_headers
-		TYPE HEADERS
-		BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
-		FILES
-			${LIBRARY_PUBLIC_HEADERS}
-		
-		FILE_SET public_cxx_modules
-		TYPE CXX_MODULES
-		BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/modules
-		FILES
-			${LIBRARY_PUBLIC_MODULES}
-	)
-
-target_compile_features (${PROJECT_NAME}_INTERNAL_LIB
-	PRIVATE
-		cxx_std_23
-	PUBLIC
-		cxx_std_23)
-
 if (${PROJECT_OPTION_PREFIX}_VERBOSE_OUTPUT)
   verbose_message("Found the following sources:")
   foreach(source IN LISTS LIBRARY_SOURCES)
@@ -137,7 +100,7 @@ if (${PROJECT_OPTION_PREFIX}_VERBOSE_OUTPUT)
   endforeach()
   verbose_message("Found the following modules:")
   foreach(module IN LISTS LIBRARY_MODULES LIBRARY_PUBLIC_MODULES)
-	verbose_message("* ${module}")	
+	verbose_message("* ${module}")
   endforeach(module)
 endif()
 
@@ -147,7 +110,48 @@ if (${PROJECT_OPTION_PREFIX}_BUILD_EXECUTABLE)
 	target_sources (${PROJECT_NAME}
 		PRIVATE
 			${APPLICATION_SOURCES})
-	target_link_libraries (${PROJECT_NAME} ${PROJECT_NAME}_INTERNAL_LIB)
+
+	# All sources in src except main.cpp as a one library
+	add_library (${PROJECT_NAME}_INTERNAL_LIB)
+	target_sources (${PROJECT_NAME}_INTERNAL_LIB
+		PRIVATE
+			${LIBRARY_SOURCES}	# TODO: After CMake 4.4, we can use FILE_SET for sources as well, but for now we need to use the old way.
+		PUBLIC
+			FILE_SET private_headers
+			TYPE HEADERS
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			FILES
+				${LIBRARY_HEADERS}
+		PUBLIC
+			FILE_SET private_cxx_modules
+			TYPE CXX_MODULES
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			FILES
+				${LIBRARY_MODULES}
+		PUBLIC
+			FILE_SET public_headers
+			TYPE HEADERS
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
+			FILES
+				${LIBRARY_PUBLIC_HEADERS}
+		PUBLIC
+			FILE_SET public_cxx_modules
+			TYPE CXX_MODULES
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/modules
+			FILES
+				${LIBRARY_PUBLIC_MODULES}
+		)
+
+	target_compile_features (${PROJECT_NAME}_INTERNAL_LIB
+		PRIVATE
+			cxx_std_23
+		PUBLIC
+			cxx_std_23)
+
+	target_link_libraries (${PROJECT_NAME}
+		PRIVATE
+			${PROJECT_NAME}_INTERNAL_LIB
+		)
 
 	if (${PROJECT_OPTION_PREFIX}_VERBOSE_OUTPUT)
 	    verbose_message("Found the following sources:")
@@ -170,7 +174,35 @@ elseif (${PROJECT_OPTION_PREFIX}_BUILD_HEADERS_ONLY)
 	)
 else ()
 	add_library(${PROJECT_NAME})
-	target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_INTERNAL_LIB)
+
+	target_sources (${PROJECT_NAME}
+		PRIVATE
+			${LIBRARY_SOURCES}	# TODO: After CMake 4.4, we can use FILE_SET for sources as well, but for now we need to use the old way.
+		PRIVATE
+			FILE_SET private_headers
+			TYPE HEADERS
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			FILES
+				${LIBRARY_HEADERS}
+		PRIVATE
+			FILE_SET private_cxx_modules
+			TYPE CXX_MODULES
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			FILES
+				${LIBRARY_MODULES}
+		PUBLIC
+			FILE_SET public_headers
+			TYPE HEADERS
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
+			FILES
+				${LIBRARY_PUBLIC_HEADERS}
+		PUBLIC
+			FILE_SET public_cxx_modules
+			TYPE CXX_MODULES
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/modules
+			FILES
+				${LIBRARY_PUBLIC_MODULES}
+		)
 endif ()
 
 message (STATUS "Added all header / module and implementation files. \n")
@@ -182,10 +214,10 @@ else ()
 endif ()
 
 include(cmake/CompilerWarnings.cmake)
+set_project_warnings(${PROJECT_NAME})
 
-include(CTest)
-
-if(BUILD_TESTING)
+if(${PROJECT_OPTION_PREFIX}_ENABLE_UNIT_TESTING)
+	include(CTest)
     find_package(GTest CONFIG REQUIRED)
 
     add_executable(CPP23EnterpriseReadyProjectSkeletonTests
@@ -194,7 +226,7 @@ if(BUILD_TESTING)
 
     target_link_libraries(CPP23EnterpriseReadyProjectSkeletonTests
         PRIVATE
-            CPP23EnterpriseReadyProjectSkeletonLib
+			$<IF:$<BOOL:${PROJECT_OPTION_PREFIX}_BUILD_EXECUTABLE>,${PROJECT_NAME}_INTERNAL_LIB,${PROJECT_NAME}>
             GTest::gtest_main
     )
 

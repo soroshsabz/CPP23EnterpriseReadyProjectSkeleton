@@ -2,7 +2,12 @@
 
 #include <iostream>
 
-void print() const
+namespace LibA
+{
+
+void HelloWorld::print() const
 {
     std::cout << "a: " << a << std::endl;
+}
+
 }

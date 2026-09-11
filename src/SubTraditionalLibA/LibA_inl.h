@@ -9,10 +9,15 @@
 #ifndef __LIB_A_INL_H_
 #define __LIB_A_INL_H_
 
-inline LibA::HelloWorld()
+namespace LibA
+{
+
+inline HelloWorld::HelloWorld()
 : a(10)
 {
 
 }
+
+}   // end of namespace LibA
 
 #endif

@@ -4,19 +4,18 @@
 
 namespace LibA
 {
-    class HelloWorld
-    {
-    public:
-        inline HelloWorld();
-        {
-           a = 10; 
-        }
 
-        void print() const;
-    private:
-        int a;
-    };
-}
+class HelloWorld
+{
+public:
+    inline HelloWorld();
+
+    void print() const;
+private:
+    int a;
+};
+
+}   // end of namespace LibA
 
 #define __GRANT_LIB_A_INL_INCL_
 #include "LibA_inl.h"
