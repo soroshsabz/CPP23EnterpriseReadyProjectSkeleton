@@ -111,7 +111,7 @@ if (${PROJECT_OPTION_PREFIX}_BUILD_EXECUTABLE)
 		PRIVATE
 			${APPLICATION_SOURCES})
 
-	# All sources in src except main.cpp as a one library
+	# All sources in Source except main.cpp as a one library
 	add_library (${PROJECT_NAME}_INTERNAL_LIB)
 	target_sources (${PROJECT_NAME}_INTERNAL_LIB
 		PRIVATE
@@ -119,25 +119,25 @@ if (${PROJECT_OPTION_PREFIX}_BUILD_EXECUTABLE)
 		PUBLIC
 			FILE_SET private_headers
 			TYPE HEADERS
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Source
 			FILES
 				${LIBRARY_HEADERS}
 		PUBLIC
 			FILE_SET private_cxx_modules
 			TYPE CXX_MODULES
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Source
 			FILES
 				${LIBRARY_MODULES}
 		PUBLIC
 			FILE_SET public_headers
 			TYPE HEADERS
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Include
 			FILES
 				${LIBRARY_PUBLIC_HEADERS}
 		PUBLIC
 			FILE_SET public_cxx_modules
 			TYPE CXX_MODULES
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/modules
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Modules
 			FILES
 				${LIBRARY_PUBLIC_MODULES}
 		)
@@ -181,25 +181,25 @@ else ()
 		PRIVATE
 			FILE_SET private_headers
 			TYPE HEADERS
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Source
 			FILES
 				${LIBRARY_HEADERS}
 		PRIVATE
 			FILE_SET private_cxx_modules
 			TYPE CXX_MODULES
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/src
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Source
 			FILES
 				${LIBRARY_MODULES}
 		PUBLIC
 			FILE_SET public_headers
 			TYPE HEADERS
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Include
 			FILES
 				${LIBRARY_PUBLIC_HEADERS}
 		PUBLIC
 			FILE_SET public_cxx_modules
 			TYPE CXX_MODULES
-			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/modules
+			BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/Modules
 			FILES
 				${LIBRARY_PUBLIC_MODULES}
 		)
@@ -221,7 +221,7 @@ if(${PROJECT_OPTION_PREFIX}_ENABLE_UNIT_TESTING)
     find_package(GTest CONFIG REQUIRED)
 
     add_executable(CPP23EnterpriseReadyProjectSkeletonTests
-        tests/Component1Tests.cpp
+        Tests/Component1Tests.cpp
     )
 
     target_link_libraries(CPP23EnterpriseReadyProjectSkeletonTests
