@@ -97,6 +97,8 @@ jobs:
       if: matrix.coverage
       run: |
         gcovr \
+          --gcov-executable gcov-16 \
+          --gcov-ignore-errors=no_working_dir_found \
           --root ${{ github.workspace }} \
           --object-directory ${{ github.workspace }}/out \
           --exclude '${{ github.workspace }}/out/.*' \

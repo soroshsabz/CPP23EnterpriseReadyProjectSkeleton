@@ -108,6 +108,7 @@ function install_gcc() {
     apt install --assume-yes g++-16
     update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-16 100
     update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-16 100
+    update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-16 100
 }
 
 function install_coverage_tool() {
