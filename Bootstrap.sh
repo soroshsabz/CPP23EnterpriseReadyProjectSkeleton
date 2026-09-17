@@ -24,6 +24,8 @@ set -o pipefail
 IFS=$'\t\n'   # Split on newlines and tabs (but not on spaces)
 script_name=$(basename "${0}")
 script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# shellcheck disable=SC2034
 readonly script_name script_dir
 
 function main() {
