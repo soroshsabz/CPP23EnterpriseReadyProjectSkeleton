@@ -207,7 +207,7 @@ endif ()
 
 message (STATUS "Added all header / module and implementation files. \n")
 
-if (${PROJECT_OBTION_PREFIX}_BUILD_HEADERS_ONLY)
+if (${PROJECT_OPTION_PREFIX}_BUILD_HEADERS_ONLY)
 	target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_23)
 else ()
 	target_compile_features (${PROJECT_NAME} PRIVATE cxx_std_23 PUBLIC cxx_std_23)

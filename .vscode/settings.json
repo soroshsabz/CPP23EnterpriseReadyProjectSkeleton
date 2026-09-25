@@ -19,7 +19,11 @@
         "wixproj",
         "wwaproj"
     ],
+
     "json.schemaDownload.trustedDomains": {
         "https://raw.githubusercontent.com/microsoft/": true
-    }
+    },
+
+    "C_Cpp.default.cppStandard": "c++23"
+
 }
