@@ -207,8 +207,11 @@ function install_vcpkg() {
         fi
 
         if ! grep -q -- "VCPKG_ROOT" ~/.bashrc; then
-            echo 'export VCPKG_ROOT=~/vcpkg' >> ~/.bashrc
-            echo "export PATH=$VCPKG_ROOT:$PATH" >> ~/.bashrc
+            # shellcheck disable=SC2016  # Intentionally unexpanded; evaluated when .bashrc is sourced
+            echo 'export VCPKG_ROOT=$HOME/vcpkg' >> ~/.bashrc
+
+            # shellcheck disable=SC2016  # Intentionally unexpanded; evaluated when .bashrc is sourced
+            echo 'export PATH=$VCPKG_ROOT:$PATH' >> ~/.bashrc
         fi
     }
 

@@ -41,10 +41,10 @@ Click the **Use this template** button to create a new repository from this proj
 
 - Install [CMake](https://cmake.org/)
 - Install [vcpkg](https://learn.microsoft.com/en-us/vcpkg/)
-- Install a C++23-capable compiler
+- Install a C++26-capable compiler
   - MSVC 2026+
-  - GCC 14+
-  - Clang 16+
+  - GCC 16+
+  - Clang 22+
 
 ### 3. Configure dependencies
 
@@ -60,14 +60,40 @@ Bootstrap.sh    # Linux/macOS
 
 ### 4. Build the project
 
+Make sure the `VCPKG_ROOT` environment variable points to your vcpkg installation
+(the presets use it to locate the vcpkg toolchain).
+
+To configure the project:
+
 ```bash
 cmake -S . --preset=x64-debug       # Windows
 # or
 cmake -S . --preset=linux-debug     # Linux
+```
 
+To build the project:
+
+```bash
+# with a preset (recommended)
+cmake --build --preset=x64-debug    # Windows
+# or
+cmake --build --preset=linux-debug  # Linux
+
+# without a preset
 cmake --build out/build/x64-debug   # Windows
 # or
 cmake --build out/build/linux-debug # Linux
+```
+
+Available presets: `x64-debug`, `x64-release`, `x86-debug`, `x86-release` (Windows),
+`linux-debug` (Linux), and `macos-debug` (macOS). Run `cmake --list-presets` to list them.
+
+To run the tests:
+
+```bash
+ctest --preset=x64-debug            # Windows
+# or
+ctest --preset=linux-debug          # Linux
 ```
 
 ## Project Structure
@@ -79,21 +105,36 @@ A typical structure for this template is:
 ├── CMakeLists.txt
 ├── CMakePresets.json
 ├── README.md
-├── src/
+├── Source/
 ├── include/
-├── tests/
+├── Tests/
 ├── modules/
-├── docs/
+├── Documents/
+└── vcpkg.json
+```
+
+If you have multiple project (sub component) typical structure inside of `Source` like below
+
+```text
+Source/
+├── CMakeLists.txt
+├── CMakePresets.json
+├── README.md
+├── Source/
+├── include/
+├── Tests/
+├── modules/
+├── Documents/
 └── vcpkg.json
 ```
 
 ### Directory overview
 
-- src/ — implementation files
+- Source/ — implementation files
 - include/ — public headers
-- tests/ — unit and integration tests
+- Tests/ — unit and integration tests
 - modules/ — C++20/23 module interface units
-- docs/ — documentation assets
+- Documents/ — documentation assets
 - vcpkg.json — dependency manifest
 - CMakePresets.json — build and configure presets
 
