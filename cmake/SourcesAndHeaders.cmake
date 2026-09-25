@@ -6,8 +6,8 @@ set(LIBRARY_SOURCES
 )
 
 set(LIBRARY_MODULES
-    Source/ModuleA/Component1.ixx
-    Source/ModuleA/ModuleA.ixx
+    Source/ModuleA/Component1.cppm
+    Source/ModuleA/ModuleA.cppm
 )
 
 set(APPLICATION_SOURCES
@@ -23,7 +23,7 @@ set(LIBRARY_PUBLIC_HEADERS
 )
 
 set(LIBRARY_PUBLIC_MODULES
-    Modules/PublicModuleA.ixx
+    Modules/PublicModuleA.cppm
 )
 
 set(TEST_SOURCES
